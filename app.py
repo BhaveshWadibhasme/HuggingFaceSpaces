@@ -5,7 +5,7 @@ st.title("This is my first app")
 
 value1 = st.slider(
      'Select a range of values for first argument',
-     300.0, 400.0)
+     300.0, 500.0)
 
 value2 = st.slider(
      'Select a range of values for second argument',
