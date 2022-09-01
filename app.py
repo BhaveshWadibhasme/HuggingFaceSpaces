@@ -9,7 +9,7 @@ value1 = st.slider(
 
 value2 = st.slider(
      'Select a range of values for second argument',
-     100.0, 200.0)
+     180.0, 200.0)
 
 
 addition = value1 + value2
