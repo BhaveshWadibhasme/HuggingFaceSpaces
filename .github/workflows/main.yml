@@ -1,20 +1,42 @@
 name: Sync to Hugging Face hub
+
+# Publishes this repository's main branch to the existing Hugging Face Space.
+# Pull requests are not a trigger. The job also refuses forks and any ref
+# other than main, and it does not receive write permission to this repository.
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-huggingface-space
+  cancel-in-progress: false
 
 jobs:
   sync-to-hub:
+    if: github.repository == 'BhaveshWadibhasme/HuggingFaceSpaces' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
+          persist-credentials: false
+
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://Bhavesh302:$HF_TOKEN@huggingface.co/spaces/Bhavesh302/Calculator_app main 
-       
+        run: |
+          set -euo pipefail
+          if [ -z "${HF_TOKEN}" ]; then
+            echo "HF_TOKEN secret is not set; refusing to sync."
+            exit 1
+          fi
+          # Same destination and force-push as the existing Space sync. The Hub
+          # branch can contain platform commits that are not in this history.
+          # HF_TOKEN stays in the push URL, which is the command this repo already
+          # runs; Actions masks the secret in logs. Trace is left off.
+          git push --force "https://Bhavesh302:${HF_TOKEN}@huggingface.co/spaces/Bhavesh302/Calculator_app" main
