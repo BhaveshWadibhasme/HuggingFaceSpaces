@@ -1,0 +1,19 @@
+# Bytecode and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Local secrets. The Space sync token lives in GitHub Actions secrets.
+.env
+.env.*
+.streamlit/secrets.toml
+
+# OS junk
+.DS_Store

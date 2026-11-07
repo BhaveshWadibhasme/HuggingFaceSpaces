@@ -1,0 +1,2 @@
+# Tools for the source checks. The app runtime dependencies stay in requirements.txt.
+pytest==9.2.0

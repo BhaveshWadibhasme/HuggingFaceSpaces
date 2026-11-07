@@ -1,2 +1,6 @@
-numpy 
-streamlit
+# streamlit matches the Hugging Face Spaces sdk_version in README.md.
+# numpy is imported by app.py. 1.23.5 still publishes wheels for Python 3.8–3.11.
+# altair is imported by Streamlit 1.10.0 as altair.vegalite.v4, which Altair 5 removed.
+numpy==1.23.5
+streamlit==1.10.0
+altair==4.2.2
